@@ -1,0 +1,43 @@
+{
+  "name": "appointment-booking-qa",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Kompleksowy projekt QA dla webowej aplikacji do rezerwowania wizyt: Playwright, TypeScript, API, SQL i GitHub Actions.",
+  "scripts": {
+    "test": "playwright test",
+    "test:ui": "playwright test --project=chromium-ui",
+    "test:api": "playwright test --project=api",
+    "test:sql": "playwright test --project=sql",
+    "test:smoke": "playwright test --grep @smoke",
+    "test:regression": "playwright test --grep @regression",
+    "test:headed": "playwright test --headed",
+    "test:debug": "playwright test --debug",
+    "report": "playwright show-report",
+    "codegen": "playwright codegen",
+    "lint": "eslint . --ext .ts",
+    "format": "prettier --write .",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "qa",
+    "playwright",
+    "typescript",
+    "api-testing",
+    "sql-testing",
+    "github-actions"
+  ],
+  "devDependencies": {
+    "@playwright/test": "^1.45.0",
+    "@types/node": "^20.14.10",
+    "@types/pg": "^8.11.6",
+    "@typescript-eslint/eslint-plugin": "^7.15.0",
+    "@typescript-eslint/parser": "^7.15.0",
+    "dotenv": "^16.4.5",
+    "eslint": "^8.57.0",
+    "prettier": "^3.3.2",
+    "typescript": "^5.5.3"
+  },
+  "dependencies": {
+    "pg": "^8.12.0"
+  }
+}
