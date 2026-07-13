@@ -21,6 +21,7 @@ Projekt jest sterowany zmiennymi środowiskowymi:
 
 - lokalnie przez `.env`,
 - w CI przez GitHub Actions Secrets.
+- lokalna aplikacja demo działa przez `npm run dev` na `http://127.0.0.1:3000`.
 
 ## Raportowanie
 
@@ -34,6 +35,7 @@ Każdy run generuje:
 
 - Aplikacja udostępnia stabilne `data-testid` dla elementów UI.
 - API posiada endpointy `/auth/login`, `/appointments`, `/appointments/:id`, `/appointments/:id/cancel`.
-- PostgreSQL zawiera tabele `appointments` i `users`, gdzie `appointments.patient_id` wskazuje na `users.id`.
+- Lokalnie `DB_PROVIDER=demo` używa endpointu diagnostycznego aplikacji demo do walidacji danych.
+- Dla realnego środowiska `DB_PROVIDER=postgres` zakłada tabele `appointments` i `users`, gdzie `appointments.patient_id` wskazuje na `users.id`.
 
 Jeżeli realna aplikacja ma inne endpointy albo schemat bazy, zmiany powinny być ograniczone głównie do `src/helpers` i `src/pages`.

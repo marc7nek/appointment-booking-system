@@ -3,8 +3,9 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const baseURL = process.env.BASE_URL ?? 'http://localhost:3000';
-const apiURL = process.env.API_URL ?? `${baseURL}/api`;
+const baseURL = process.env.BASE_URL ?? 'http://127.0.0.1:3000';
+const rawApiURL = process.env.API_URL ?? `${baseURL}/api`;
+const apiURL = rawApiURL.endsWith('/') ? rawApiURL : `${rawApiURL}/`;
 
 export default defineConfig({
   testDir: './tests',
@@ -60,7 +61,10 @@ export default defineConfig({
     },
     {
       name: 'sql',
-      testMatch: /.*\.sql\.spec\.ts/
+      testMatch: /.*\.sql\.spec\.ts/,
+      use: {
+        baseURL: apiURL
+      }
     }
   ],
   outputDir: 'test-results/artifacts'

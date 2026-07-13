@@ -12,13 +12,17 @@ export class AppointmentsPage {
   }
 
   async cancelFirstAppointment(): Promise<void> {
-    const firstAppointment = this.appointmentCards.first();
-    await expect(firstAppointment).toBeVisible();
-    await firstAppointment.getByTestId('cancel-appointment').click();
-    await this.page.getByTestId('confirm-cancel-appointment').click();
+    const cancelButton = this.page.getByTestId('cancel-appointment').first();
+    await expect(cancelButton).toBeVisible();
+    this.page.once('dialog', async (dialog) => {
+      await dialog.accept();
+    });
+    await cancelButton.click();
   }
 
   async expectCancellationVisible(): Promise<void> {
-    await expect(this.page.getByTestId('appointment-status').first()).toContainText(/cancelled|anulowana/i);
+    await expect(
+      this.page.getByTestId('appointment-status').filter({ hasText: /cancelled|anulowana/i }).first()
+    ).toBeVisible();
   }
 }

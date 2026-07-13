@@ -6,7 +6,7 @@ export class AppointmentApiClient {
   constructor(private readonly request: APIRequestContext) {}
 
   async login(user: TestUser): Promise<string> {
-    const response = await this.request.post('/auth/login', {
+    const response = await this.request.post('auth/login', {
       data: {
         email: user.email,
         password: user.password
@@ -28,26 +28,26 @@ export class AppointmentApiClient {
   }
 
   async createAppointment(token: string, payload: ApiAppointmentPayload): Promise<APIResponse> {
-    return this.request.post('/appointments', {
+    return this.request.post('appointments', {
       headers: this.authHeaders(token),
       data: payload
     });
   }
 
   async getAppointment(token: string, appointmentId: string): Promise<APIResponse> {
-    return this.request.get(`/appointments/${appointmentId}`, {
+    return this.request.get(`appointments/${appointmentId}`, {
       headers: this.authHeaders(token)
     });
   }
 
   async cancelAppointment(token: string, appointmentId: string): Promise<APIResponse> {
-    return this.request.patch(`/appointments/${appointmentId}/cancel`, {
+    return this.request.patch(`appointments/${appointmentId}/cancel`, {
       headers: this.authHeaders(token)
     });
   }
 
   async listAppointments(token: string): Promise<APIResponse> {
-    return this.request.get('/appointments', {
+    return this.request.get('appointments', {
       headers: this.authHeaders(token)
     });
   }

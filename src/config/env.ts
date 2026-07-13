@@ -14,8 +14,8 @@ const readEnv = (name: string, fallback?: string): string => {
 };
 
 export const env = {
-  baseUrl: readEnv('BASE_URL', 'http://localhost:3000'),
-  apiUrl: readEnv('API_URL', 'http://localhost:3000/api'),
+  baseUrl: readEnv('BASE_URL', 'http://127.0.0.1:3000'),
+  apiUrl: readEnv('API_URL', 'http://127.0.0.1:3000/api'),
   patient: {
     email: readEnv('QA_PATIENT_EMAIL', 'qa.patient@example.com'),
     password: readEnv('QA_PATIENT_PASSWORD', 'ChangeMe123!')
@@ -24,6 +24,7 @@ export const env = {
     email: readEnv('QA_ADMIN_EMAIL', 'qa.admin@example.com'),
     password: readEnv('QA_ADMIN_PASSWORD', 'ChangeMe123!')
   } satisfies TestUser,
+  dbProvider: readEnv('DB_PROVIDER', 'demo'),
   db: {
     host: readEnv('DB_HOST', 'localhost'),
     port: Number(readEnv('DB_PORT', '5432')),

@@ -17,12 +17,19 @@ test.describe('UI | Rezerwowanie wizyt', () => {
 
   test('@regression pacjent może anulować najbliższą wizytę', async ({
     loginPage,
+    bookingPage,
     appointmentsPage,
     page
   }) => {
+    const appointment = uiAppointmentDraft();
+
     await loginPage.goto();
     await loginPage.login(env.patient);
     await expect(page).toHaveURL(/dashboard|appointments/);
+
+    await bookingPage.goto();
+    await bookingPage.bookAppointment(appointment);
+    await bookingPage.expectBooked(appointment);
 
     await appointmentsPage.goto();
     await appointmentsPage.cancelFirstAppointment();

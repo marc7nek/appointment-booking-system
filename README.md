@@ -17,6 +17,23 @@ Kompleksowy projekt automatyzacji testów dla aplikacji webowej do rezerwowania 
 npm install
 npx playwright install --with-deps
 cp .env.example .env
+```
+
+## Lokalna aplikacja demo
+
+Repo zawiera prostą aplikację demo, żeby testy dało się uruchomić bez osobnego projektu.
+
+W pierwszym terminalu:
+
+```bash
+npm run dev
+```
+
+Aplikacja będzie dostępna pod `http://127.0.0.1:3000`, a API pod `http://127.0.0.1:3000/api`.
+
+W drugim terminalu:
+
+```bash
 npm test
 ```
 
@@ -49,6 +66,7 @@ Skopiuj `.env.example` do `.env` i ustaw:
 - `QA_PATIENT_EMAIL`, `QA_PATIENT_PASSWORD` - konto pacjenta.
 - `QA_ADMIN_EMAIL`, `QA_ADMIN_PASSWORD` - konto administracyjne.
 - `DB_*` - dane połączenia z PostgreSQL.
+- `DB_PROVIDER` - ustaw `demo` dla lokalnej aplikacji demo albo `postgres` dla prawdziwej bazy.
 
 ## Struktura
 

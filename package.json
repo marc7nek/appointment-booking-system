@@ -4,6 +4,7 @@
   "private": true,
   "description": "Kompleksowy projekt QA dla webowej aplikacji do rezerwowania wizyt: Playwright, TypeScript, API, SQL i GitHub Actions.",
   "scripts": {
+    "dev": "node demo-app/server.js",
     "test": "playwright test",
     "test:ui": "playwright test --project=chromium-ui",
     "test:api": "playwright test --project=api",

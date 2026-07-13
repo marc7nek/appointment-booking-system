@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Rezerwacja Wizyt QA</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="/appointments">Rezerwacja Wizyt QA</a>
+      <nav>
+        <a href="/appointments">Wizyty</a>
+        <a href="/appointments/new">Nowa wizyta</a>
+        <button id="logout-button" class="ghost-button" type="button">Wyloguj</button>
+      </nav>
+    </header>
+
+    <main>
+      <section id="login-view" class="view narrow" hidden>
+        <h1>Zaloguj się</h1>
+        <form id="login-form" class="panel">
+          <label>
+            Email
+            <input data-testid="email-input" name="email" type="email" autocomplete="email" required />
+          </label>
+          <label>
+            Hasło
+            <input
+              data-testid="password-input"
+              name="password"
+              type="password"
+              autocomplete="current-password"
+              required
+            />
+          </label>
+          <button data-testid="login-submit" type="submit">Zaloguj</button>
+          <p data-testid="login-error" class="error" hidden>Nieprawidłowy email lub hasło.</p>
+        </form>
+      </section>
+
+      <section id="appointments-view" class="view" hidden>
+        <div class="page-heading">
+          <h1>Twoje wizyty</h1>
+          <a class="button-link" href="/appointments/new">Umów wizytę</a>
+        </div>
+        <div id="appointments-list" class="appointments-list"></div>
+      </section>
+
+      <section id="booking-view" class="view narrow" hidden>
+        <h1>Nowa wizyta</h1>
+        <form id="booking-form" class="panel">
+          <label>
+            Usługa
+            <select data-testid="service-select" name="serviceId"></select>
+          </label>
+          <label>
+            Specjalista
+            <select data-testid="provider-select" name="providerId"></select>
+          </label>
+          <label>
+            Data
+            <input data-testid="date-input" name="date" type="date" required />
+          </label>
+          <div>
+            <span class="field-label">Godzina</span>
+            <div class="time-slots">
+              <button data-testid="time-slot" type="button" class="time-slot" data-time="09:00">
+                09:00
+              </button>
+              <button data-testid="time-slot" type="button" class="time-slot" data-time="10:00">
+                10:00
+              </button>
+              <button data-testid="time-slot" type="button" class="time-slot" data-time="11:30">
+                11:30
+              </button>
+            </div>
+          </div>
+          <label>
+            Notatka
+            <textarea data-testid="patient-note" name="patientNote" rows="3"></textarea>
+          </label>
+          <button data-testid="booking-submit" type="submit">Zarezerwuj</button>
+          <p data-testid="booking-confirmation" class="success" hidden></p>
+        </form>
+      </section>
+    </main>
+
+    <script src="/app.js"></script>
+  </body>
+</html>
