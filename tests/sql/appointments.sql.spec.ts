@@ -2,8 +2,8 @@ import { env } from '@config/env';
 import { apiAppointmentPayload } from '@helpers/test-data';
 import { expect, test } from '@fixtures/test';
 
-test.describe('SQL | Integralność danych rezerwacji', () => {
-  test('@regression zapisuje utworzoną wizytę z poprawnym pacjentem i statusem', async ({
+test.describe('SQL | Appointment data integrity', () => {
+  test('@regression stores a created appointment with the correct patient and status', async ({
     apiClient,
     authenticatedPatientToken,
     db
@@ -23,7 +23,7 @@ test.describe('SQL | Integralność danych rezerwacji', () => {
     expect(appointment?.starts_at).toBeInstanceOf(Date);
   });
 
-  test('@regression anulowana wizyta ma status i datę anulowania w bazie', async ({
+  test('@regression cancelled appointment has status and cancellation timestamp in storage', async ({
     apiClient,
     authenticatedPatientToken,
     db

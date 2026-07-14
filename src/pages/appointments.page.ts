@@ -22,7 +22,7 @@ export class AppointmentsPage {
 
   async expectCancellationVisible(): Promise<void> {
     await expect(
-      this.page.getByTestId('appointment-status').filter({ hasText: /cancelled|anulowana/i }).first()
+      this.page.getByTestId('appointment-status').filter({ hasText: /cancelled/i }).first()
     ).toBeVisible();
   }
 }

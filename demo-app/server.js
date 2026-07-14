@@ -26,13 +26,13 @@ const sessions = new Map();
 const appointments = new Map();
 
 const services = [
-  { id: 'service-qa-consultation', name: 'Konsultacja', durationMinutes: 30 },
-  { id: 'service-qa-control', name: 'Wizyta kontrolna', durationMinutes: 20 }
+  { id: 'service-qa-consultation', name: 'Consultation', durationMinutes: 30 },
+  { id: 'service-qa-control', name: 'Follow-up visit', durationMinutes: 20 }
 ];
 
 const providers = [
   { id: 'provider-qa-doctor', name: 'Dr QA' },
-  { id: 'provider-qa-specialist', name: 'Specjalista QA' }
+  { id: 'provider-qa-specialist', name: 'QA Specialist' }
 ];
 
 seedAppointment();
@@ -278,7 +278,7 @@ function seedAppointment() {
     providerId: providers[0].id,
     providerName: providers[0].name,
     startsAt: startsAt.toISOString(),
-    patientNote: 'Wizyta startowa do testu anulowania',
+    patientNote: 'Seed appointment for cancellation testing',
     status: 'booked',
     createdAt: new Date().toISOString(),
     cancelledAt: null

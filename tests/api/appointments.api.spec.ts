@@ -2,7 +2,10 @@ import { apiAppointmentPayload } from '@helpers/test-data';
 import { expect, test } from '@fixtures/test';
 
 test.describe('API | Appointments', () => {
-  test('@smoke tworzy i pobiera wizytę', async ({ apiClient, authenticatedPatientToken }) => {
+  test('@smoke creates and fetches an appointment', async ({
+    apiClient,
+    authenticatedPatientToken
+  }) => {
     const createResponse = await apiClient.createAppointment(
       authenticatedPatientToken,
       apiAppointmentPayload()
@@ -19,12 +22,12 @@ test.describe('API | Appointments', () => {
     expect(appointment.id).toBe(created.id);
   });
 
-  test('@regression odrzuca próbę rezerwacji bez autoryzacji', async ({ apiClient }) => {
+  test('@regression rejects booking without authorization', async ({ apiClient }) => {
     const response = await apiClient.createAppointment('', apiAppointmentPayload());
     expect(response.status()).toBe(401);
   });
 
-  test('@regression anuluje istniejącą wizytę', async ({
+  test('@regression cancels an existing appointment', async ({
     apiClient,
     authenticatedPatientToken
   }) => {

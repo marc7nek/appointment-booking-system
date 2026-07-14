@@ -15,11 +15,11 @@ export const uiAppointmentDraft = (): AppointmentDraft => {
   date.setDate(date.getDate() + 2);
 
   return {
-    serviceName: 'Konsultacja',
+    serviceName: 'Consultation',
     providerName: 'Dr QA',
     date: `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`,
     time: '10:00',
-    patientNote: `Automatyczny test QA ${Date.now()}`
+    patientNote: `Automated QA test ${Date.now()}`
   };
 };
 

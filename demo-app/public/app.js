@@ -146,13 +146,13 @@ async function bookAppointment(event) {
   });
 
   if (!response.ok) {
-    confirmation.textContent = 'Nie udało się zarezerwować wizyty.';
+    confirmation.textContent = 'The appointment could not be booked.';
     confirmation.hidden = false;
     return;
   }
 
   const appointment = await response.json();
-  confirmation.textContent = `${appointment.serviceName} została zarezerwowana na ${state.selectedTime}.`;
+  confirmation.textContent = `${appointment.serviceName} has been booked for ${state.selectedTime}.`;
   confirmation.hidden = false;
 }
 
@@ -180,7 +180,7 @@ async function renderAppointments() {
 
 function renderAppointmentCard(appointment) {
   const startsAt = new Date(appointment.startsAt);
-  const statusText = appointment.status === 'cancelled' ? 'Anulowana' : 'Zarezerwowana';
+  const statusText = appointment.status === 'cancelled' ? 'Cancelled' : 'Booked';
   const canCancel = appointment.status !== 'cancelled';
 
   return `
@@ -188,7 +188,7 @@ function renderAppointmentCard(appointment) {
       <div>
         <h2>${appointment.serviceName}</h2>
         <p>${appointment.providerName}</p>
-        <p>${startsAt.toLocaleString('pl-PL')}</p>
+        <p>${startsAt.toLocaleString('en-US')}</p>
         <span data-testid="appointment-status" class="status ${appointment.status}">
           ${statusText}
         </span>
@@ -196,7 +196,7 @@ function renderAppointmentCard(appointment) {
       ${
         canCancel
           ? `<button data-testid="cancel-appointment" data-appointment-id="${appointment.id}" type="button">
-              Anuluj
+              Cancel
             </button>`
           : ''
       }
@@ -205,7 +205,7 @@ function renderAppointmentCard(appointment) {
 }
 
 async function cancelAppointment(appointmentId) {
-  const confirmed = window.confirm('Czy na pewno anulować wizytę?');
+  const confirmed = window.confirm('Are you sure you want to cancel this appointment?');
 
   if (!confirmed) {
     return;

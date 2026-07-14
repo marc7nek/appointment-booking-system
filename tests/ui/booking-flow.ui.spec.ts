@@ -2,8 +2,8 @@ import { env } from '@config/env';
 import { uiAppointmentDraft } from '@helpers/test-data';
 import { expect, test } from '@fixtures/test';
 
-test.describe('UI | Rezerwowanie wizyt', () => {
-  test('@smoke pacjent może zarezerwować wizytę', async ({ loginPage, bookingPage, page }) => {
+test.describe('UI | Appointment booking', () => {
+  test('@smoke patient can book an appointment', async ({ loginPage, bookingPage, page }) => {
     const appointment = uiAppointmentDraft();
 
     await loginPage.goto();
@@ -15,7 +15,7 @@ test.describe('UI | Rezerwowanie wizyt', () => {
     await bookingPage.expectBooked(appointment);
   });
 
-  test('@regression pacjent może anulować najbliższą wizytę', async ({
+  test('@regression patient can cancel the next appointment', async ({
     loginPage,
     bookingPage,
     appointmentsPage,
@@ -36,7 +36,7 @@ test.describe('UI | Rezerwowanie wizyt', () => {
     await appointmentsPage.expectCancellationVisible();
   });
 
-  test('@regression niepoprawne logowanie pokazuje komunikat błędu', async ({ loginPage }) => {
+  test('@regression invalid login shows an error message', async ({ loginPage }) => {
     await loginPage.goto();
     await loginPage.login({ email: 'wrong@example.com', password: 'bad-password' });
     await loginPage.expectLoginError();
