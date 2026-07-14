@@ -2,7 +2,7 @@
   "name": "appointment-booking-qa",
   "version": "1.0.0",
   "private": true,
-  "description": "Kompleksowy projekt QA dla webowej aplikacji do rezerwowania wizyt: Playwright, TypeScript, API, SQL i GitHub Actions.",
+  "description": "End-to-end QA automation project for an appointment booking web application using Playwright, TypeScript, API tests, SQL validation, and GitHub Actions.",
   "scripts": {
     "dev": "node demo-app/server.js",
     "test": "playwright test",

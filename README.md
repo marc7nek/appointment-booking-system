@@ -1,19 +1,47 @@
-# Appointment Booking QA
+# Appointment Booking QA Automation
 
-Comprehensive test automation project for a web-based appointment booking application.
+End-to-end QA automation project for an appointment booking web application, built with **Playwright**, **TypeScript**, **API testing**, **SQL validation**, and **GitHub Actions**.
 
-## Scope
+The repository includes both a complete automated test suite and a lightweight local demo application, so the project can be cloned and run without connecting it to an external system first.
 
-- E2E UI in Playwright with Page Object Model
-- API tests via `APIRequestContext`
-- SQL tests for data integrity in PostgreSQL
-- Test data, helpers, and configuration via environment variables
-- HTML, JUnit report, screenshots, traces, and error videos
-- GitHub Actions for smoke, UI, API, and SQL regression
----
-![Web application screenshot](app.png)![Playwright execution reoprt screenshot](report.png)
----
-## Start
+![Web application screenshot](app.png)
+![Playwright execution report screenshot](report.png)
+
+## Highlights
+
+- Cross-browser UI tests with Playwright: Chromium, Firefox, and mobile viewport.
+- Page Object Model for maintainable E2E test structure.
+- API tests using Playwright `APIRequestContext`.
+- SQL/data-integrity checks with support for a local demo mode or PostgreSQL.
+- Environment-driven configuration for local, staging, and CI runs.
+- HTML and JUnit reports, screenshots, traces, and videos on failure.
+- GitHub Actions workflow for quality gates and automated test execution.
+- Local demo appointment booking app included for hands-on test runs.
+
+## Tech Stack
+
+- Playwright
+- TypeScript
+- Node.js
+- PostgreSQL client (`pg`)
+- ESLint and Prettier
+- GitHub Actions
+
+## Test Coverage
+
+The suite covers the core appointment booking flow:
+
+- Patient login
+- Appointment booking
+- Appointment cancellation
+- Invalid login validation
+- Appointment API creation, retrieval, and cancellation
+- Unauthorized API request handling
+- Data integrity checks for created and cancelled appointments
+
+## Getting Started
+
+Install dependencies and Playwright browsers:
 
 ```bash
 npm install
@@ -21,65 +49,112 @@ npx playwright install --with-deps
 cp .env.example .env
 ```
 
-## Local Demo Application
-
-The repository includes a simple demo application so you can run tests without a separate project.
-
-In first terminal:
+Start the local demo application:
 
 ```bash
 npm run dev
 ```
 
-The application will be available at `http://127.0.0.1:3000`, and the API at `http://127.0.0.1:3000/api`.
+The app will be available at:
 
-In second terminal
+```text
+http://127.0.0.1:3000
+```
+
+The API will be available at:
+
+```text
+http://127.0.0.1:3000/api
+```
+
+In a second terminal, run the tests:
 
 ```bash
 npm test
 ```
 
-## Most important commands
+## Demo Credentials
 
-```bash
-npm run test:smoke
-npm run test:ui
-npm run test:api
-npm run test:sql
-npm run report
+```text
+Email: qa.patient@example.com
+Password: ChangeMe123!
 ```
 
-## Required application selectors
+## Useful Commands
 
-UI tests use stable `data-testid` attributes, e.g.:
+```bash
+npm run dev              # Start the local demo app
+npm test                 # Run the full test suite
+npm run test:smoke       # Run smoke tests
+npm run test:ui          # Run UI tests
+npm run test:api         # Run API tests
+npm run test:sql         # Run SQL/data checks
+npm run test:headed      # Run tests with a visible browser
+npm run test:debug       # Run tests in Playwright debug mode
+npm run report           # Open the HTML report
+npm run typecheck        # Run TypeScript validation
+npm run lint             # Run ESLint
+```
+
+## Environment Configuration
+
+Copy `.env.example` to `.env` and adjust values as needed.
+
+```env
+BASE_URL=http://127.0.0.1:3000
+API_URL=http://127.0.0.1:3000/api
+
+QA_PATIENT_EMAIL=qa.patient@example.com
+QA_PATIENT_PASSWORD=ChangeMe123!
+
+DB_PROVIDER=demo
+```
+
+Use `DB_PROVIDER=demo` for the included local application. Use `DB_PROVIDER=postgres` when validating against a real PostgreSQL database.
+
+## Required UI Selectors
+
+The UI tests rely on stable `data-testid` attributes, for example:
 
 - `email-input`, `password-input`, `login-submit`
 - `service-select`, `provider-select`, `date-input`, `time-slot`, `booking-submit`
 - `booking-confirmation`, `appointment-card`, `cancel-appointment`
 
-If the application has different selectors, it is best to change them only in the `src/pages` files.
+If the target application uses different selectors, update the Page Object files in `src/pages`.
 
-## Environmental variables
-
-Copy `.env.example` to `.env` and set:
-
-- `BASE_URL` - web application address
-- `API_URL` - API address
-- `QA_PATIENT_EMAIL`, `QA_PATIENT_PASSWORD` - patient account
-- `QA_ADMIN_EMAIL`, `QA_ADMIN_PASSWORD` - admin account
-- `DB_*` - PostgreSQL connection data
-- `DB_PROVIDER` - set `demo` for a local demo application or `postgres` for a real database.
-
-## Structure
+## Project Structure
 
 ```text
+demo-app/              Local demo appointment booking app
 src/
-  config/       environment configuration
-  fixtures/     extended Playwright fixture
-  helpers/      API & DB clients and test data
-  pages/        Page Object Model
+  config/              Environment configuration
+  fixtures/            Extended Playwright fixtures
+  helpers/             API client, DB client, and test data
+  pages/               Page Object Model classes
+  types/               Shared TypeScript types
 tests/
-  api/          API scenarios
-  sql/          DB validation
-  ui/           E2E scenarios
+  api/                 API test scenarios
+  sql/                 Data integrity scenarios
+  ui/                  End-to-end UI scenarios
+.github/workflows/    GitHub Actions workflow
+```
+
+## CI
+
+The GitHub Actions workflow runs:
+
+- dependency installation
+- TypeScript validation
+- linting
+- Playwright test suites
+- report artifact upload
+
+Secrets such as `BASE_URL`, `API_URL`, test credentials, and database settings can be configured in GitHub repository settings when running against a deployed environment.
+
+## Repository Description
+
+Suggested GitHub repository description:
+
+```text
+Playwright + TypeScript QA automation project for an appointment booking app, including UI, API, SQL validation, a local demo app, and GitHub Actions CI.
 ```
