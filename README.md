@@ -1,15 +1,15 @@
 # Appointment Booking QA
 
-Kompleksowy projekt automatyzacji testów dla aplikacji webowej do rezerwowania wizyt.
+Comprehensive test automation project for a web-based appointment booking application.
 
-## Zakres
+## Scope
 
-- UI E2E w Playwright z Page Object Model.
-- Testy API przez `APIRequestContext`.
-- Testy SQL dla integralności danych w PostgreSQL.
-- Dane testowe, helpery i konfiguracja przez zmienne środowiskowe.
-- Raport HTML, JUnit, screenshoty, trace i wideo przy błędach.
-- GitHub Actions dla smoke, regresji UI, API i SQL.
+- E2E UI in Playwright with Page Object Model
+- API tests via `APIRequestContext`
+- SQL tests for data integrity in PostgreSQL
+- Test data, helpers, and configuration via environment variables
+- HTML, JUnit report, screenshots, traces, and error videos
+- GitHub Actions for smoke, UI, API, and SQL regression
 ---
 ![Zrzut ekranu aplikacji webowej](app.png)![Raport z egzekucji testów automatycznych wygenerowany w Playwright](report.png)
 ---
@@ -21,25 +21,25 @@ npx playwright install --with-deps
 cp .env.example .env
 ```
 
-## Lokalna aplikacja demo
+## Local Demo Application
 
-Repo zawiera prostą aplikację demo, żeby testy dało się uruchomić bez osobnego projektu.
+The repository includes a simple demo application so you can run tests without a separate project.
 
-W pierwszym terminalu:
+In first terminal:
 
 ```bash
 npm run dev
 ```
 
-Aplikacja będzie dostępna pod `http://127.0.0.1:3000`, a API pod `http://127.0.0.1:3000/api`.
+The application will be available at `http://127.0.0.1:3000`, and the API at `http://127.0.0.1:3000/api`.
 
-W drugim terminalu:
+In second terminal
 
 ```bash
 npm test
 ```
 
-## Najważniejsze komendy
+## Most important commands
 
 ```bash
 npm run test:smoke
@@ -49,37 +49,37 @@ npm run test:sql
 npm run report
 ```
 
-## Wymagane selektory aplikacji
+## Required application selectors
 
-Testy UI używają stabilnych atrybutów `data-testid`, np.:
+UI tests use stable `data-testid` attributes, e.g.:
 
 - `email-input`, `password-input`, `login-submit`
 - `service-select`, `provider-select`, `date-input`, `time-slot`, `booking-submit`
 - `booking-confirmation`, `appointment-card`, `cancel-appointment`
 
-Jeżeli aplikacja ma inne selektory, najlepiej zmienić je tylko w plikach `src/pages`.
+If the application has different selectors, it is best to change them only in the `src/pages` files.
 
-## Zmienne środowiskowe
+## Environmental variables
 
-Skopiuj `.env.example` do `.env` i ustaw:
+Copy `.env.example` to `.env` and set:
 
-- `BASE_URL` - adres aplikacji webowej.
-- `API_URL` - adres API.
-- `QA_PATIENT_EMAIL`, `QA_PATIENT_PASSWORD` - konto pacjenta.
-- `QA_ADMIN_EMAIL`, `QA_ADMIN_PASSWORD` - konto administracyjne.
-- `DB_*` - dane połączenia z PostgreSQL.
-- `DB_PROVIDER` - ustaw `demo` dla lokalnej aplikacji demo albo `postgres` dla prawdziwej bazy.
+- `BASE_URL` - web application address
+- `API_URL` - API address
+- `QA_PATIENT_EMAIL`, `QA_PATIENT_PASSWORD` - patient account
+- `QA_ADMIN_EMAIL`, `QA_ADMIN_PASSWORD` - admin account
+- `DB_*` - PostgreSQL connection data
+- `DB_PROVIDER` - set `demo` for a local demo application or `postgres` for a real database.
 
-## Struktura
+## Structure
 
 ```text
 src/
-  config/       konfiguracja środowiska
-  fixtures/     rozszerzone fixture Playwright
-  helpers/      klienci API, DB i dane testowe
+  config/       environment configuration
+  fixtures/     extended Playwright fixture
+  helpers/      API & DB clients and test data
   pages/        Page Object Model
 tests/
-  api/          scenariusze API
-  sql/          walidacje bazy danych
-  ui/           scenariusze end-to-end
+  api/          API scenarios
+  sql/          DB validation
+  ui/           E2E scenarios
 ```
