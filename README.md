@@ -11,7 +11,7 @@ Comprehensive test automation project for a web-based appointment booking applic
 - HTML, JUnit report, screenshots, traces, and error videos
 - GitHub Actions for smoke, UI, API, and SQL regression
 ---
-![Zrzut ekranu aplikacji webowej](app.png)![Raport z egzekucji testów automatycznych wygenerowany w Playwright](report.png)
+![Web application screenshot](app.png)![Playwright execution reoprt screenshot](report.png)
 ---
 ## Start
 
