@@ -10,7 +10,9 @@ Kompleksowy projekt automatyzacji testów dla aplikacji webowej do rezerwowania 
 - Dane testowe, helpery i konfiguracja przez zmienne środowiskowe.
 - Raport HTML, JUnit, screenshoty, trace i wideo przy błędach.
 - GitHub Actions dla smoke, regresji UI, API i SQL.
-
+---
+![Zrzut ekranu aplikacji webowej](app.png)![Raport z egzekucji testów automatycznych wygenerowany w Playwright](report.png)
+---
 ## Start
 
 ```bash
