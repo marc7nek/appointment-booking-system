@@ -10,8 +10,9 @@
     <header class="topbar">
       <a class="brand" href="/appointments">QA Appointment Booking</a>
       <nav>
-        <a href="/appointments">Appointments</a>
-        <a href="/appointments/new">New appointment</a>
+        <a id="appointments-link" href="/appointments">Appointments</a>
+        <a id="schedule-link" href="/appointments/new">Schedule appointment</a>
+        <span id="session-label" class="session-label" hidden></span>
         <button id="logout-button" class="ghost-button" type="button">Log out</button>
       </nav>
     </header>
@@ -19,7 +20,12 @@
     <main>
       <section id="login-view" class="view narrow" hidden>
         <h1>Sign in</h1>
+        <p class="view-subtitle">Use the demo patient account to explore booking without setup.</p>
         <form id="login-form" class="panel">
+          <button data-testid="demo-login-submit" class="secondary-button" type="button">
+            Continue as demo patient
+          </button>
+          <div class="separator"><span>or sign in manually</span></div>
           <label>
             Email
             <input data-testid="email-input" name="email" type="email" autocomplete="email" required />
@@ -42,13 +48,14 @@
       <section id="appointments-view" class="view" hidden>
         <div class="page-heading">
           <h1>Your appointments</h1>
-          <a class="button-link" href="/appointments/new">Book appointment</a>
+          <a class="button-link" href="/appointments/new">Schedule appointment</a>
         </div>
         <div id="appointments-list" class="appointments-list"></div>
       </section>
 
       <section id="booking-view" class="view narrow" hidden>
-        <h1>New appointment</h1>
+        <h1>Schedule appointment</h1>
+        <p class="view-subtitle">Choose a service, provider, date, and time before confirming.</p>
         <form id="booking-form" class="panel">
           <label>
             Service
@@ -80,7 +87,7 @@
             Note
             <textarea data-testid="patient-note" name="patientNote" rows="3"></textarea>
           </label>
-          <button data-testid="booking-submit" type="submit">Book</button>
+          <button data-testid="booking-submit" type="submit">Confirm appointment</button>
           <p data-testid="booking-confirmation" class="success" hidden></p>
         </form>
       </section>

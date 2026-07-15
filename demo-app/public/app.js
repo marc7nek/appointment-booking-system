@@ -1,6 +1,7 @@
 const state = {
   token: localStorage.getItem('qa-token'),
   redirectAfterLogin: null,
+  user: null,
   selectedTime: '10:00',
   services: [],
   providers: []
@@ -13,6 +14,7 @@ const views = {
 };
 
 document.querySelector('#login-form').addEventListener('submit', login);
+document.querySelector('[data-testid="demo-login-submit"]').addEventListener('click', demoLogin);
 document.querySelector('#booking-form').addEventListener('submit', bookAppointment);
 document.querySelector('#logout-button').addEventListener('click', logout);
 
@@ -43,6 +45,7 @@ route();
 async function route() {
   if (location.pathname === '/login') {
     hideAll();
+    updateNavigation(false);
     views.login.hidden = false;
     return;
   }
@@ -53,6 +56,7 @@ async function route() {
   }
 
   hideAll();
+  updateNavigation(true);
 
   await loadReferenceData();
 
@@ -69,16 +73,28 @@ async function route() {
 async function login(event) {
   event.preventDefault();
   const form = new FormData(event.currentTarget);
+
+  await loginWithCredentials({
+    email: form.get('email'),
+    password: form.get('password')
+  });
+}
+
+async function demoLogin() {
+  await loginWithCredentials({
+    email: 'qa.patient@example.com',
+    password: 'ChangeMe123!'
+  });
+}
+
+async function loginWithCredentials(credentials) {
   const error = document.querySelector('[data-testid="login-error"]');
   error.hidden = true;
 
   const response = await fetch('/api/auth/login', {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
-    body: JSON.stringify({
-      email: form.get('email'),
-      password: form.get('password')
-    })
+    body: JSON.stringify(credentials)
   });
 
   if (!response.ok) {
@@ -88,6 +104,7 @@ async function login(event) {
 
   const body = await response.json();
   state.token = body.accessToken;
+  state.user = body.user;
   localStorage.setItem('qa-token', state.token);
   history.pushState({}, '', state.redirectAfterLogin || '/appointments');
   state.redirectAfterLogin = null;
@@ -104,10 +121,12 @@ async function ensureAuthenticated() {
   });
 
   if (response.ok) {
+    state.user = await response.json();
     return true;
   }
 
   state.token = null;
+  state.user = null;
   localStorage.removeItem('qa-token');
   return false;
 }
@@ -195,7 +214,9 @@ async function renderAppointments() {
   }
 
   const appointments = await response.json();
-  list.innerHTML = appointments.map(renderAppointmentCard).join('');
+  list.innerHTML = appointments.length
+    ? appointments.map(renderAppointmentCard).join('')
+    : renderEmptyAppointments();
 
   list.querySelectorAll('[data-testid="cancel-appointment"]').forEach((button) => {
     button.addEventListener('click', async () => {
@@ -231,6 +252,16 @@ function renderAppointmentCard(appointment) {
   `;
 }
 
+function renderEmptyAppointments() {
+  return `
+    <section class="empty-state">
+      <h2>No appointments yet</h2>
+      <p>Schedule your first appointment when you are ready.</p>
+      <a class="button-link" href="/appointments/new">Schedule appointment</a>
+    </section>
+  `;
+}
+
 async function cancelAppointment(appointmentId) {
   const confirmed = window.confirm('Are you sure you want to cancel this appointment?');
 
@@ -247,6 +278,7 @@ async function cancelAppointment(appointmentId) {
 function logout() {
   state.token = null;
   state.redirectAfterLogin = null;
+  state.user = null;
   localStorage.removeItem('qa-token');
   history.pushState({}, '', '/login');
   route();
@@ -254,9 +286,20 @@ function logout() {
 
 function redirectToLogin(returnPath) {
   state.redirectAfterLogin = returnPath;
+  updateNavigation(false);
   history.replaceState({}, '', '/login');
   hideAll();
   views.login.hidden = false;
+}
+
+function updateNavigation(isAuthenticated) {
+  document.querySelector('#appointments-link').hidden = !isAuthenticated;
+  document.querySelector('#schedule-link').hidden = !isAuthenticated;
+  document.querySelector('#logout-button').hidden = !isAuthenticated;
+
+  const sessionLabel = document.querySelector('#session-label');
+  sessionLabel.hidden = !isAuthenticated;
+  sessionLabel.textContent = state.user ? state.user.email : '';
 }
 
 function hideAll() {

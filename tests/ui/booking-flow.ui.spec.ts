@@ -1,4 +1,3 @@
-import { env } from '@config/env';
 import { uiAppointmentDraft } from '@helpers/test-data';
 import { expect, test } from '@fixtures/test';
 
@@ -7,7 +6,7 @@ test.describe('UI | Appointment booking', () => {
     const appointment = uiAppointmentDraft();
 
     await loginPage.goto();
-    await loginPage.login(env.patient);
+    await loginPage.continueAsDemoPatient();
     await expect(page).toHaveURL(/dashboard|appointments/);
 
     await bookingPage.goto();
@@ -24,7 +23,7 @@ test.describe('UI | Appointment booking', () => {
     const appointment = uiAppointmentDraft();
 
     await loginPage.goto();
-    await loginPage.login(env.patient);
+    await loginPage.continueAsDemoPatient();
     await expect(page).toHaveURL(/dashboard|appointments/);
 
     await bookingPage.goto();
@@ -51,7 +50,7 @@ test.describe('UI | Appointment booking', () => {
     await expect(page).toHaveURL(/\/login$/);
     await expect(loginPage.emailInput).toBeVisible();
 
-    await loginPage.login(env.patient);
+    await loginPage.continueAsDemoPatient();
     await expect(page).toHaveURL(/\/appointments\/new$/);
 
     await bookingPage.bookAppointment(appointment);

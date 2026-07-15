@@ -52,6 +52,11 @@ nav a {
   text-decoration: none;
 }
 
+.session-label {
+  color: var(--muted);
+  font-size: 14px;
+}
+
 main {
   width: min(1120px, calc(100% - 32px));
   margin: 40px auto;
@@ -71,12 +76,19 @@ main {
 }
 
 h1 {
-  margin: 0 0 24px;
+  margin: 0 0 10px;
   font-size: 32px;
 }
 
+.view-subtitle {
+  margin: 0 0 24px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
 .panel,
-.appointment-card {
+.appointment-card,
+.empty-state {
   padding: 24px;
   background: var(--panel);
   border: 1px solid var(--border);
@@ -139,8 +151,33 @@ button:hover,
   border: 1px solid var(--border);
 }
 
+.secondary-button {
+  width: 100%;
+  background: #17202a;
+}
+
+.secondary-button:hover {
+  background: #2b3642;
+}
+
 .ghost-button:hover {
   background: #eef6f8;
+}
+
+.separator {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.separator::before,
+.separator::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--border);
 }
 
 .time-slots {
@@ -179,6 +216,20 @@ button:hover,
 
 .appointment-card p {
   margin: 4px 0;
+  color: var(--muted);
+}
+
+.empty-state {
+  text-align: center;
+}
+
+.empty-state h2 {
+  margin: 0 0 8px;
+  font-size: 22px;
+}
+
+.empty-state p {
+  margin: 0 0 18px;
   color: var(--muted);
 }
 
