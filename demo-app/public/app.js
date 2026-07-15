@@ -1,5 +1,6 @@
 const state = {
   token: localStorage.getItem('qa-token'),
+  redirectAfterLogin: null,
   selectedTime: '10:00',
   services: [],
   providers: []
@@ -40,16 +41,18 @@ document.addEventListener('click', (event) => {
 route();
 
 async function route() {
-  if (!state.token && location.pathname !== '/login') {
-    history.replaceState({}, '', '/login');
-  }
-
-  hideAll();
-
   if (location.pathname === '/login') {
+    hideAll();
     views.login.hidden = false;
     return;
   }
+
+  if (!(await ensureAuthenticated())) {
+    redirectToLogin(location.pathname);
+    return;
+  }
+
+  hideAll();
 
   await loadReferenceData();
 
@@ -86,8 +89,27 @@ async function login(event) {
   const body = await response.json();
   state.token = body.accessToken;
   localStorage.setItem('qa-token', state.token);
-  history.pushState({}, '', '/appointments');
+  history.pushState({}, '', state.redirectAfterLogin || '/appointments');
+  state.redirectAfterLogin = null;
   await route();
+}
+
+async function ensureAuthenticated() {
+  if (!state.token) {
+    return false;
+  }
+
+  const response = await fetch('/api/auth/me', {
+    headers: { authorization: `Bearer ${state.token}` }
+  });
+
+  if (response.ok) {
+    return true;
+  }
+
+  state.token = null;
+  localStorage.removeItem('qa-token');
+  return false;
 }
 
 async function loadReferenceData() {
@@ -145,6 +167,11 @@ async function bookAppointment(event) {
     })
   });
 
+  if (response.status === 401) {
+    redirectToLogin('/appointments/new');
+    return;
+  }
+
   if (!response.ok) {
     confirmation.textContent = 'The appointment could not be booked.';
     confirmation.hidden = false;
@@ -163,7 +190,7 @@ async function renderAppointments() {
   });
 
   if (!response.ok) {
-    logout();
+    redirectToLogin('/appointments');
     return;
   }
 
@@ -219,9 +246,17 @@ async function cancelAppointment(appointmentId) {
 
 function logout() {
   state.token = null;
+  state.redirectAfterLogin = null;
   localStorage.removeItem('qa-token');
   history.pushState({}, '', '/login');
   route();
+}
+
+function redirectToLogin(returnPath) {
+  state.redirectAfterLogin = returnPath;
+  history.replaceState({}, '', '/login');
+  hideAll();
+  views.login.hidden = false;
 }
 
 function hideAll() {

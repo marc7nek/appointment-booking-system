@@ -36,6 +36,28 @@ test.describe('UI | Appointment booking', () => {
     await appointmentsPage.expectCancellationVisible();
   });
 
+  test('@regression stale session redirects to sign in and returns to booking', async ({
+    loginPage,
+    bookingPage,
+    page
+  }) => {
+    const appointment = uiAppointmentDraft();
+
+    await page.addInitScript(() => {
+      localStorage.setItem('qa-token', 'expired-session-token');
+    });
+
+    await bookingPage.goto();
+    await expect(page).toHaveURL(/\/login$/);
+    await expect(loginPage.emailInput).toBeVisible();
+
+    await loginPage.login(env.patient);
+    await expect(page).toHaveURL(/\/appointments\/new$/);
+
+    await bookingPage.bookAppointment(appointment);
+    await bookingPage.expectBooked(appointment);
+  });
+
   test('@regression invalid login shows an error message', async ({ loginPage }) => {
     await loginPage.goto();
     await loginPage.login({ email: 'wrong@example.com', password: 'bad-password' });

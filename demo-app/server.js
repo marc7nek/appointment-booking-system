@@ -108,6 +108,11 @@ async function handleApi(req, res) {
     return;
   }
 
+  if (req.method === 'GET' && url.pathname === '/api/auth/me') {
+    sendJson(res, 200, { id: user.id, email: user.email, role: user.role });
+    return;
+  }
+
   if (req.method === 'GET' && url.pathname === '/api/appointments') {
     const userAppointments = Array.from(appointments.values()).filter(
       (appointment) => appointment.patientId === user.id
