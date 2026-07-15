@@ -1,6 +1,6 @@
 # Appointment Booking QA Automation
 
-End-to-end QA automation project for an appointment booking web application, built with **Playwright**, **TypeScript**, **API testing**, **SQL validation**, and **GitHub Actions**.
+End-to-end QA automation project for an appointment booking web application, built with **Playwright**, **TypeScript**, **API testing**, **SQL** validation, and **GitHub Actions**.
 
 The repository includes both a complete automated test suite and a lightweight local demo application, so the project can be cloned and run without connecting it to an external system first.
 
@@ -150,11 +150,3 @@ The GitHub Actions workflow runs:
 - report artifact upload
 
 Secrets such as `BASE_URL`, `API_URL`, test credentials, and database settings can be configured in GitHub repository settings when running against a deployed environment.
-
-## Repository Description
-
-Suggested GitHub repository description:
-
-```text
-Playwright + TypeScript QA automation project for an appointment booking app, including UI, API, SQL validation, a local demo app, and GitHub Actions CI.
-```
