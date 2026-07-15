@@ -16,7 +16,7 @@ The repository includes both a complete automated test suite and a lightweight l
 - Environment-driven configuration for local, staging, and CI runs.
 - HTML and JUnit reports, screenshots, traces, and videos on failure.
 - GitHub Actions workflow for quality gates and automated test execution.
-- Local demo appointment booking app included for hands-on test runs.
+- Local demo appointment booking app with one-click demo sign-in for hands-on test runs.
 
 ## Tech Stack
 
@@ -32,9 +32,11 @@ The repository includes both a complete automated test suite and a lightweight l
 The suite covers the core appointment booking flow:
 
 - Patient login
-- Appointment booking
+- One-click demo patient sign-in
+- Appointment scheduling
 - Appointment cancellation
 - Invalid login validation
+- Expired session redirect and return-to-booking behavior
 - Appointment API creation, retrieval, and cancellation
 - Unauthorized API request handling
 - Data integrity checks for created and cancelled appointments
@@ -73,12 +75,18 @@ In a second terminal, run the tests:
 npm test
 ```
 
-## Demo Credentials
+## Demo Sign-In
 
-```text
-Email: qa.patient@example.com
-Password: ChangeMe123!
-```
+The local app includes a **Continue as demo patient** button on the sign-in screen. This is the fastest way to explore the app manually or follow the happy path used by the UI tests.
+
+Manual credentials are still available for login validation scenarios:
+
+| Role | Email | Password |
+| --- | --- | --- |
+| Patient | `qa.patient@example.com` | `ChangeMe123!` |
+| Admin | `qa.admin@example.com` | `ChangeMe123!` |
+
+After sign-in, use **Schedule appointment** to open the scheduling form and **Confirm appointment** to submit the selected service, provider, date, and time.
 
 ## Useful Commands
 
@@ -117,6 +125,7 @@ Use `DB_PROVIDER=demo` for the included local application. Use `DB_PROVIDER=post
 The UI tests rely on stable `data-testid` attributes, for example:
 
 - `email-input`, `password-input`, `login-submit`
+- `demo-login-submit`
 - `service-select`, `provider-select`, `date-input`, `time-slot`, `booking-submit`
 - `booking-confirmation`, `appointment-card`, `cancel-appointment`
 
